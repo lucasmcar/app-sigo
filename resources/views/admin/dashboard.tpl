@@ -31,12 +31,10 @@
           </a>
 
           <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/sigo/cadastro/atualizar">Editar cadastro</a></li>
             <li><a class="dropdown-item" href="#">Clientes</a></li>
-
             <li><a class="dropdown-item" href="#">Veículos</a></li>
-
             <li><a class="dropdown-item" href="#">Serviços</a></li>
-
             <li><a class="dropdown-item" href="#">Funcionários</a></li>
           </ul>
         </li>

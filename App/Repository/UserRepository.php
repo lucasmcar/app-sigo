@@ -18,9 +18,9 @@ class UserRepository
         return $this->model->create($data);
     }
 
-    public function findForSign(string $email)
+    public function findForSign(string $username, string $email =  null)
     {
-        return $this->model->findForSign($email);
+        return $this->model->findForSign($username, $email);
     }
 
     public function updateLastLogin($id, $lastLogin)

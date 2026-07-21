@@ -24,7 +24,7 @@
     <footer>
         
     </footer>
-    @js( 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js' )
+    @js(https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js)
     
 
     {{! $scripts}}
