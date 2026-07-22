@@ -2,12 +2,10 @@
 
 use App\Middleware\AuthMiddleware;
 
-$router->get('/', 'ExampleController', 'index');
-$router->get('/admin', 'ExampleController', 'admin');
 
 //Rota inicial
 
-$router->get('/login', 'IndexController', 'index');
+$router->get('/', 'IndexController', 'index');
 $router->get('/cadastro', 'IndexController', 'cadastro');
 $router->post('/login', 'AuthController', 'login');
 $router->post('/cadastrar', 'IndexController', 'cadastrar');
@@ -24,5 +22,6 @@ $router->group('/sigo', function($router) {
     $router->get('/dashboard', 'DashboardController', 'index');
     $router->get('/cadastro/atualizar', 'UserController', 'atualizar');
     $router->get('/cliente/cadastro', 'ClientController', 'cadastro');
+    $router->post('/cliente/cadastrar', 'ClientController', 'cadastrar');
 },[AuthMiddleware::class]);
 

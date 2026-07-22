@@ -74,7 +74,6 @@ class ModelBase
             }
         }
         $this->connect()->execute();
-        $teste = $this->connect()->lastInsertId();
         return $this->connect()->lastInsertId();
     }
 

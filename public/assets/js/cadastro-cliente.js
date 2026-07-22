@@ -470,7 +470,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             formData.append('_csrf_token', csrfToken);
 
-            const response = await fetch('/clientes/cadastrar', {
+            const response = await fetch('/sigo/cliente/cadastrar', {
 
                 method: 'POST',
 
@@ -478,6 +478,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 headers: {
 
+                    'X-CSRF-TOKEN': csrfToken,
                     'X-Requested-With': 'XMLHttpRequest'
 
                 }
@@ -485,7 +486,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             const result = await response.json();
-
+            debugger;
             if (result.success) {
 
                 await Swal.fire({

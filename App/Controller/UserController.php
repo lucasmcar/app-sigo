@@ -34,7 +34,7 @@ class UserController
 
 
 
-        $styles = ['/assets/css/cadastro.css'];
+        $styles = ['/assets/css/dashboard.css'];
         $scripts = ['/assets/js/cadastro.js'];
         return new View(view: 'admin/atualizar', vars: $data, styles: $styles, scripts: $scripts);
     }
