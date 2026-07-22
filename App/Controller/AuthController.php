@@ -30,6 +30,18 @@ class AuthController
 
         $usuario =  $user->findForSign($data['username']);
 
+        if(empty($usuario)){
+            http_response_code(404);
+            echo json_encode(
+                [
+                    'success' => false, 
+                    'message' => 'Usuário não cadastrado', 
+                    'redirect' => '/login'
+                ]
+            );
+            exit;
+        }
+
         
 
         $payload = [
