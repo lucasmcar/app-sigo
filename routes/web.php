@@ -23,5 +23,6 @@ $router->notFound(function(){
 $router->group('/sigo', function($router) {
     $router->get('/dashboard', 'DashboardController', 'index');
     $router->get('/cadastro/atualizar', 'UserController', 'atualizar');
+    $router->get('/cliente/cadastro', 'ClientController', 'cadastro');
 },[AuthMiddleware::class]);
 
