@@ -2,15 +2,15 @@
 
 namespace App\Repository;
 
-use App\Model\Client;
+use App\Model\Vehicle;
 
-class ClientRepository
+class VehicleRepository
 {
     private $model;
 
     public function __construct()
     {
-        $this->model = new Client();
+        $this->model = new Vehicle();
     }
 
     public function create(array $data) : int
@@ -23,10 +23,10 @@ class ClientRepository
         return $this->model->findForSign($username, $email);
     }
 
-    public function updateLastLogin($id, $lastLogin)
+    /*public function updateLastLogin($id, $lastLogin)
     {
         $this->model->updateLastLogin($id, $lastLogin);
-    }
+    }*/
 
     public function getWhere(string $param, string $operator, int|string $value, bool $hasOr = true )
     {

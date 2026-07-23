@@ -33,7 +33,7 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="/sigo/cadastro/atualizar">Editar cadastro</a></li>
             <li><a class="dropdown-item" href="/sigo/cliente/cadastro">Clientes</a></li>
-            <li><a class="dropdown-item" href="#">Veículos</a></li>
+            <li><a class="dropdown-item" href="/sigo/veiculo/cadastro">Veículos</a></li>
             <li><a class="dropdown-item" href="#">Serviços</a></li>
             <li><a class="dropdown-item" href="#">Funcionários</a></li>
           </ul>

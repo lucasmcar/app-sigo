@@ -5,6 +5,7 @@ namespace App\Controller;
 use Core\View\View;
 use Core\Security\Jwt\JwtHandler;
 use App\Repository\ClientRepository;
+use App\Model\Client;
 use App\Repository\UserRepository;
 use Core\Security\Csrf;
 use App\Helper\InputFilterHelper;
@@ -115,4 +116,41 @@ class ClientController
             return;
         }
     }
+
+    public function buscar()
+{
+    $data = InputFilterHelper::filterInputs(INPUT_POST, [
+        'document',
+        '_csrf_token'
+    ]);
+
+    //$document = preg_replace('/\D/', '', $data['document']);
+
+    $client= new Client();
+
+    $client = $client
+        ->where('cpf', '=', $data['document'])
+        ->orWhere('cnpj', '=', $data['document'])
+        ->get();
+
+    if (!empty($client)) {
+
+        http_response_code(200);
+
+        echo json_encode([
+            'success' => true,
+            'message' => 'Cliente encontrado.',
+            'customer' => $client[0]
+        ]);
+
+        exit;
+    }
+
+    http_response_code(404);
+
+    echo json_encode([
+        'success' => false,
+        'message' => 'Cliente não encontrado.'
+    ]);
+}
 }
