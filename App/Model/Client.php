@@ -60,4 +60,16 @@ class Client extends ModelBase
         $result = $this->db->execute([]);
         return $result;
     }
+
+    public function buscarPorNomeOuDocumento(string $busca = '')
+    {
+        $busca = "%{$busca}%";
+
+        return $this
+            ->alias('c')
+            ->where('c.name', 'LIKE', $busca)
+            ->orWhere('c.cpf', 'LIKE', $busca)
+            ->orWhere('c.cnpj', 'LIKE', $busca)
+            ->get();
+    }
 }

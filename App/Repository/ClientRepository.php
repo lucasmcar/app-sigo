@@ -30,10 +30,16 @@ class ClientRepository
 
     public function getWhere(string $param, string $operator, int|string $value, bool $hasOr = true )
     {
-        if($hasOr) {
-            return $this->model->where($param, $operator, $value)
-                ->orWhere($param, $operator, $value) ->get();
-        }
         return $this->model->where($param, $operator, $value)->get();
+    }
+
+    public function buscarPorNomeOuDocumento(string $busca = '')
+    {
+        return $this->model->buscarPorNomeOuDocumento($busca);
+    }
+
+    public function all()
+    {
+        return $this->model->all();
     }
 }

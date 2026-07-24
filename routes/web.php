@@ -26,5 +26,7 @@ $router->group('/sigo', function($router) {
     $router->get('/veiculo/cadastro', 'VehicleController', 'cadastro');
     $router->post('/veiculo/cadastrar', 'VehicleController', 'cadastrar');
     $router->post('/clientes/buscar', 'ClientController', 'buscar');
+    $router->get('/clientes/todos', 'ClientController', 'buscarTodos');
+    $router->get('/cliente/listar', 'ClientController', 'listarPor');
 },[AuthMiddleware::class]);
 
