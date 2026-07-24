@@ -21,12 +21,19 @@ $router->notFound(function(){
 $router->group('/sigo', function($router) {
     $router->get('/dashboard', 'DashboardController', 'index');
     $router->get('/cadastro/atualizar', 'UserController', 'atualizar');
+    //Cliente
     $router->get('/cliente/cadastro', 'ClientController', 'cadastro');
     $router->post('/cliente/cadastrar', 'ClientController', 'cadastrar');
-    $router->get('/veiculo/cadastro', 'VehicleController', 'cadastro');
-    $router->post('/veiculo/cadastrar', 'VehicleController', 'cadastrar');
-    $router->post('/clientes/buscar', 'ClientController', 'buscar');
     $router->get('/clientes/todos', 'ClientController', 'buscarTodos');
     $router->get('/cliente/listar', 'ClientController', 'listarPor');
+    $router->post('/clientes/buscar', 'ClientController', 'buscar');
+    //Veiculo
+    $router->get('/veiculo/cadastro', 'VehicleController', 'cadastro');
+    $router->post('/veiculos/buscar', 'VehicleController', 'buscarVeiculo');
+    $router->post('/veiculo/cadastrar', 'VehicleController', 'cadastrar');
+    //Ordem de serviço
+    $router->get('/os/cadastro', 'ServiceOrderController', 'cadastroServiceOrder');
+    $router->post('/os/cadastrar', 'ServiceOrderController', 'cadastrar');
+    
 },[AuthMiddleware::class]);
 

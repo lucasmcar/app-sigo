@@ -35,7 +35,7 @@
             <li><a class="dropdown-item" href="/sigo/cliente/cadastro">Cadastro Clientes</a></li>
             <li><a class="dropdown-item" href="/sigo/veiculo/cadastro">Cadastro Veículos</a></li>
             <li><a class="dropdown-item" href="/sigo/clientes/todos">Clientes</a></li>
-            <li><a class="dropdown-item" href="#">Serviços</a></li>
+            <li><a class="dropdown-item" href="/sigo/os/cadastro">Serviços</a></li>
             <li><a class="dropdown-item" href="#">Funcionários</a></li>
           </ul>
         </li>

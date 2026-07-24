@@ -7,6 +7,7 @@ use Core\Security\Jwt\JwtHandler;
 use Core\Security\Csrf;
 use App\Helper\InputFilterHelper;
 use App\Repository\VehicleRepository;
+use App\Model\Vehicle;
 
 class VehicleController
 {
@@ -127,5 +128,41 @@ class VehicleController
             ]);
 
         }
-}
+    }
+
+    public function buscarVeiculo()
+    {
+        $data = InputFilterHelper::filterInputs(INPUT_POST, [
+            'plate',
+            '_csrf_token'
+        ]);
+
+        $plate = strtoupper(
+            preg_replace('/[^A-Z0-9]/', '', $data['plate'])
+        );
+
+        $vehicleRepository = new Vehicle();
+
+        $vehicle = $vehicleRepository->buscarPorPlaca($plate);
+
+        if (!$vehicle) {
+
+            http_response_code(404);
+
+            echo json_encode([
+                'success' => false,
+                'message' => 'Veículo não encontrado.'
+            ]);
+
+            return;
+        }
+
+        http_response_code(200);
+
+        echo json_encode([
+            'success' => true,
+            'message' => 'Veículo localizado.',
+            'data' => $vehicle
+        ]);
+    }
 }

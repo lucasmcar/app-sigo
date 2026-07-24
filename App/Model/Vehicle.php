@@ -33,4 +33,22 @@ class Vehicle extends ModelBase
 
         'notes'
     ];
+
+    public function buscarPorPlaca(string $plate)
+{
+    return $this
+        ->alias('v')
+        ->join('customers c', 'v.customer_id = c.id')
+        ->where('v.plate', '=', $plate)
+        ->get([
+            'v.id',
+            'v.brand',
+            'v.model',
+            'v.model_year',
+            'v.color',
+            'v.plate',
+            'v.mileage',
+            'c.name AS customer_name'
+        ])[0] ?? null;
+}
 }
