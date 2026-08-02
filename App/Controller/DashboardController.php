@@ -5,6 +5,8 @@ namespace App\Controller;
 use Core\View\View;
 use IntlDateFormatter;
 use DateTime;
+use App\Repository\UserRepository;
+use Core\Security\Jwt\JwtHandler;
 
 class DashboardController
 {
@@ -23,8 +25,25 @@ class DashboardController
         $dataAtual = new DateTime();
         $atual = $formatter->format($dataAtual); 
 
+
+        $data = [];
+        if (session_id()) {
+            $data = JwtHandler::validateToken($_SESSION['jwt']);
+        }
+
+        $userRepository = new UserRepository();
+
+        // Obter dados do usuário logado
+        $userResult = $userRepository->findForSign($data['name']);
+        /*if (!$userResult || empty($userResult)) {
+            return new View('admin/perfil', ['title' => 'Perfil Administrativo'], [], [], 'admin-layout');
+        }*/
+       
+
+
         $data = [
-            'atual' => $atual
+            'atual' => $atual,
+            'company_name' => $userResult[0]['company_name'],
         ];
 
         // Lógica para exibir o dashboard

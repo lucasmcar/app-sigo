@@ -6,6 +6,7 @@ namespace App\Controller;
 use Core\View\View;
 use App\Helper\InputFilterHelper;
 use App\Repository\VehicleRepository;
+use App\Repository\ServiceOrderRepository;
 use App\Model\Vehicle;
 
 
@@ -19,7 +20,6 @@ class ServiceOrderController
 
         return new View(view: 'admin/cadastro-os', vars: [], styles: $styles, scripts: $scripts);
     }
-
 
     /**
      * Cadastro da Ordem de Serviço
@@ -35,9 +35,13 @@ class ServiceOrderController
             'complaint',
             'entry_mileage',
 
-            'estimated_delivery',
-            'status',
+            'service_category',
+            'priority',
 
+            'estimated_delivery',
+            'estimated_value',
+
+            'status',
             'notes'
 
         ]);
@@ -66,11 +70,51 @@ class ServiceOrderController
 
         unset($data['_csrf_token']);
 
-        //$repository = new ServiceOrderRepository();
+        // Front manda ABERTA / EM_ANALISE, banco espera minúsculo (ENUM)
+        $statusMap = [
+            'ABERTA'     => 'aberta',
+            'EM_ANALISE' => 'em_analise',
+        ];
+
+        if (!isset($statusMap[$data['status']])) {
+
+            http_response_code(400);
+
+            echo json_encode([
+                'success' => false,
+                'message' => 'Status inicial inválido.'
+            ]);
+
+            return;
+
+        }
+
+        $data['status'] = $statusMap[$data['status']];
+
+        // Renomeia notes -> observations (nome da coluna na tabela)
+        $data['observations'] = $data['notes'] ?? null;
+        unset($data['notes']);
+
+        $data['created_by'] = $_SESSION['user_id'] ?? null;
+
+        if (!$data['created_by']) {
+
+            http_response_code(401);
+
+            echo json_encode([
+                'success' => false,
+                'message' => 'Sessão expirada. Faça login novamente.'
+            ]);
+
+            return;
+
+        }
+
+        $repository = new ServiceOrderRepository();
 
         try {
 
-            $id = null;//$repository->create($data);
+            $id = $repository->create($data);
 
             if (!$id) {
 
@@ -91,7 +135,19 @@ class ServiceOrderController
 
                 'success' => true,
                 'message' => 'Ordem de Serviço criada com sucesso.',
-                'redirect' => '/os'
+                'redirect' => '/sigo/os/' . $id
+
+            ]);
+
+        } catch (\InvalidArgumentException $e) {
+
+            // ex.: veículo não encontrado
+            http_response_code(404);
+
+            echo json_encode([
+
+                'success' => false,
+                'message' => $e->getMessage()
 
             ]);
 

@@ -75,7 +75,7 @@ class AuthController
             'token' => $jwt,
             'user' => [
                 'id' => $usuario[0]['id'],
-                'nome' => $usuario[0]['nome'],
+                'nome' => $usuario[0]['username'],
                 'email' => $usuario[0]['email'],
             ],
             'redirect' => '/sigo/dashboard'

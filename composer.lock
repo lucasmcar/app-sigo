@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "41007bed99b1d1d362e0c5beca5401da",
+    "content-hash": "f21cf02610172b1e0d7549604d6b1af3",
     "packages": [
         {
             "name": "dompdf/dompdf",
@@ -226,16 +226,16 @@
         },
         {
             "name": "lucasmcar/tiny-core-lib",
-            "version": "1.1.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lucasmcar/tiny-core-lib.git",
-                "reference": "350ca72b793f6689a5b123091bcff7e9aa637114"
+                "reference": "de225254257ef4716556ae50c7176dcc24aedd72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lucasmcar/tiny-core-lib/zipball/350ca72b793f6689a5b123091bcff7e9aa637114",
-                "reference": "350ca72b793f6689a5b123091bcff7e9aa637114",
+                "url": "https://api.github.com/repos/lucasmcar/tiny-core-lib/zipball/de225254257ef4716556ae50c7176dcc24aedd72",
+                "reference": "de225254257ef4716556ae50c7176dcc24aedd72",
                 "shasum": ""
             },
             "require": {
@@ -264,10 +264,10 @@
             ],
             "description": "Biblioteca core com suporte a JWT, CSRF e Views",
             "support": {
-                "source": "https://github.com/lucasmcar/tiny-core-lib/tree/v.1.1.0",
+                "source": "https://github.com/lucasmcar/tiny-core-lib/tree/1.2.1",
                 "issues": "https://github.com/lucasmcar/tiny-core-lib/issues"
             },
-            "time": "2026-07-14T18:37:32+00:00"
+            "time": "2026-08-02T18:00:26+00:00"
         },
         {
             "name": "masterminds/html5",

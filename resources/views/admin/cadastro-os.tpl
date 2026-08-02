@@ -1,108 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark shadow">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">
-      <i class="bi bi-tools"></i>
-      SIGO
-    </a>
-
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#menu"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="menu">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link active" href="/sigo/dashboard">Dashboard</a>
-        </li>
-
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            role="button"
-            data-bs-toggle="dropdown"
-          >
-            Cadastros
-          </a>
-
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/sigo/cadastro/atualizar">Editar cadastro</a></li>
-            <li><a class="dropdown-item" href="/sigo/cliente/cadastro">Clientes</a></li>
-            <li><a class="dropdown-item" href="#">Veículos</a></li>
-            <li><a class="dropdown-item" href="/sigo/os/cadastro'">Serviços</a></li>
-            <li><a class="dropdown-item" href="#">Funcionários</a></li>
-          </ul>
-        </li>
-
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            role="button"
-            data-bs-toggle="dropdown"
-          >
-            Ordens de Serviço
-          </a>
-
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item">Nova Ordem</a></li>
-
-            <li><a class="dropdown-item">Em andamento</a></li>
-
-            <li><a class="dropdown-item">Finalizadas</a></li>
-          </ul>
-        </li>
-
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            data-bs-toggle="dropdown"
-          >
-            Financeiro
-          </a>
-
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item">Receitas</a></li>
-
-            <li><a class="dropdown-item">Despesas</a></li>
-
-            <li><a class="dropdown-item">Fluxo de Caixa</a></li>
-          </ul>
-        </li>
-
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            data-bs-toggle="dropdown"
-          >
-            Estoque
-          </a>
-
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item">Produtos</a></li>
-
-            <li><a class="dropdown-item">Movimentações</a></li>
-          </ul>
-        </li>
-      </ul>
-
-      <div class="text-white">
-        <i class="bi bi-bell me-3"></i>
-
-        <i class="bi bi-person-circle"></i>
-
-        Oficina Otto
-      </div>
-    </div>
-  </div>
-</nav>
+{% include 'partials/navbar' %}
 <div class="container-fluid mt-4">
 
      <div class="card register-card mx-auto">
@@ -292,6 +188,77 @@
 
                         </div>
 
+
+                        <div class="col-md-6 mb-3">
+    <label class="form-label">
+        Categoria do Atendimento
+    </label>
+
+    <select
+        id="service_category"
+        name="service_category"
+        class="form-select">
+
+        <option value="mecanica">Mecânica</option>
+
+        <option value="funilaria">Funilaria</option>
+
+        <option value="pintura">Pintura</option>
+
+        <option value="funilaria_pintura">
+            Funilaria + Pintura
+        </option>
+
+        <option value="eletrica">Elétrica</option>
+
+        <option value="estetica">
+            Estética Automotiva
+        </option>
+
+        <option value="ar_condicionado">
+            Ar Condicionado
+        </option>
+
+        <option value="revisao">
+            Revisão
+        </option>
+
+        <option value="outro">
+            Outro
+        </option>
+
+    </select>
+
+</div>
+
+
+<div class="col-md-3 mb-3">
+
+<label class="form-label">
+
+Prioridade
+
+</label>
+
+<select
+id="priority"
+name="priority"
+class="form-select">
+
+<option value="normal">Normal</option>
+
+<option value="alta">Alta</option>
+
+<option value="urgente">Urgente</option>
+
+</select>
+
+</div>
+
+
+
+
+
                         <div class="col-md-4 mb-3">
 
                             <label class="form-label">
@@ -384,6 +351,31 @@
                         </div>
 
                     </div>
+
+                    <div class="col-md-3 mb-3">
+
+<label class="form-label">
+
+Valor Estimado
+
+</label>
+
+<div class="input-group">
+
+<span class="input-group-text">
+R$
+</span>
+
+<input
+type="number"
+step="0.01"
+class="form-control"
+id="estimated_value"
+name="estimated_value">
+
+</div>
+
+</div>
 
                     <div class="d-grid gap-2 mt-4">
 
