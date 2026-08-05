@@ -62,6 +62,7 @@ class AuthController
         $_SESSION['jwt'] = $jwt;
         $_SESSION['jwt_exp'] = $payload['exp'];
         $_SESSION['username'] = $usuario[0]['username'];
+        $_SESSION['user_id'] = $usuario[0]['id'];
         
         
         $user->updateLastLogin($usuario[0]['id'], date('Y-m-d H:i:s'));

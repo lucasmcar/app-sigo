@@ -174,6 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('vehicle_color').textContent = result.data.color;
                 document.getElementById('vehicle_plate').textContent = result.data.plate;
                 document.getElementById('entry_mileage').value = result.data.mileage;
+                document.getElementById('customer_id').value = result.data.customer_id;
             }else{
 
                 vehicleCard.classList.add('d-none');

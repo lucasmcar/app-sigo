@@ -66,13 +66,10 @@ class ModelBase
         $sql = "INSERT INTO {$this->table} ({$fields}) VALUES ({$values})";
         $this->connect()->prepare($sql);
         foreach ($this->fillable as $field) {
-            if(!isset($data[$field])){
-                $data[$field] = null;
-            }
-            if(isset($data[$field])){
-                $this->connect()->bind(":$field", $data[$field]);
-            }
+            $value = $data[$field] ?? null;
+            $this->connect()->bind(":$field", $value);
         }
+
         $this->connect()->execute();
         return $this->connect()->lastInsertId();
     }
@@ -216,5 +213,17 @@ class ModelBase
     {
         $this->joins[] = "RIGHT JOIN $table ON $condition";
         return $this;
+    }
+
+    private function nextNumber(): int
+    {
+        $stmt = $this->connect()->prepare(
+            "SELECT COALESCE(MAX(number), 0) + 1 AS next_number FROM {$this->table}"
+        );
+        $this->connect()->execute();
+ 
+        $result = $stmt->fetch();
+ 
+        return (int) ($result['next_number'] ?? 1);
     }
 }

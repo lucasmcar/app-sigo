@@ -31,6 +31,7 @@ class ServiceOrderController
 
             'vehicle_id',
             '_csrf_token',
+            'customer_id',
 
             'complaint',
             'entry_mileage',
@@ -40,12 +41,16 @@ class ServiceOrderController
 
             'estimated_delivery',
             'estimated_value',
+            'expected_date',
 
             'status',
             'notes'
 
         ]);
 
+        unset($data['_csrf_token']);
+
+        // --- Campos obrigatórios ---
         foreach ([
             'vehicle_id',
             'complaint',
@@ -68,9 +73,64 @@ class ServiceOrderController
 
         }
 
-        unset($data['_csrf_token']);
+        $vehicleId = filter_var($data['vehicle_id'], FILTER_VALIDATE_INT);
+        if ($vehicleId === false) {
 
-        // Front manda ABERTA / EM_ANALISE, banco espera minúsculo (ENUM)
+            http_response_code(400);
+
+            echo json_encode([
+                'success' => false,
+                'message' => 'Veículo inválido.'
+            ]);
+
+            return;
+
+        }
+        $data['vehicle_id'] = $vehicleId;
+
+        $mileage = filter_var($data['entry_mileage'], FILTER_VALIDATE_INT, [
+            'options' => ['min_range' => 0]
+        ]);
+        if ($mileage === false) {
+
+            http_response_code(400);
+
+            echo json_encode([
+                'success' => false,
+                'message' => 'Quilometragem inválida.'
+            ]);
+
+            return;
+
+        }
+        $data['entry_mileage'] = $mileage;
+
+        if (isset($data['estimated_value']) && $data['estimated_value'] !== '') {
+
+            $estimatedValue = filter_var($data['estimated_value'], FILTER_VALIDATE_FLOAT, [
+                'options' => ['min_range' => 0]
+            ]);
+
+            if ($estimatedValue === false) {
+
+                http_response_code(400);
+
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Valor estimado inválido.'
+                ]);
+
+                return;
+
+            }
+
+            $data['estimated_value'] = $estimatedValue;
+
+        } else {
+
+            $data['estimated_value'] = 0.00;
+
+        }
         $statusMap = [
             'ABERTA'     => 'aberta',
             'EM_ANALISE' => 'em_analise',
@@ -91,7 +151,39 @@ class ServiceOrderController
 
         $data['status'] = $statusMap[$data['status']];
 
-        // Renomeia notes -> observations (nome da coluna na tabela)
+        $validCategories = [
+            'mecanica', 'funilaria', 'pintura', 'funilaria_pintura',
+            'eletrica', 'estetica', 'ar_condicionado', 'revisao', 'outro'
+        ];
+
+        if (!empty($data['service_category']) && !in_array($data['service_category'], $validCategories, true)) {
+
+            http_response_code(400);
+
+            echo json_encode([
+                'success' => false,
+                'message' => 'Categoria de atendimento inválida.'
+            ]);
+
+            return;
+
+        }
+
+        $validPriorities = ['normal', 'alta', 'urgente'];
+
+        if (!empty($data['priority']) && !in_array($data['priority'], $validPriorities, true)) {
+
+            http_response_code(400);
+
+            echo json_encode([
+                'success' => false,
+                'message' => 'Prioridade inválida.'
+            ]);
+
+            return;
+
+        }
+
         $data['observations'] = $data['notes'] ?? null;
         unset($data['notes']);
 
@@ -109,6 +201,8 @@ class ServiceOrderController
             return;
 
         }
+        $data['estimated_delivery'] = $data['estimated_delivery'] ?? null;
+        $data['entry_date'] = date('Y-m-d H:i:s');
 
         $repository = new ServiceOrderRepository();
 
@@ -141,7 +235,6 @@ class ServiceOrderController
 
         } catch (\InvalidArgumentException $e) {
 
-            // ex.: veículo não encontrado
             http_response_code(404);
 
             echo json_encode([
@@ -158,11 +251,77 @@ class ServiceOrderController
             echo json_encode([
 
                 'success' => false,
-                'message' => 'Erro interno.',
-                'error_message' => $e->getMessage()
-
+                'message' => 'Erro interno.'
             ]);
 
         }
+    }
+
+    public function buscaOS($params =[])
+    {
+        $rawQ = $params[0] ?? $_GET['search'] ?? '';
+
+        $q = trim(filter_var(
+            $rawQ,
+            FILTER_UNSAFE_RAW,
+            FILTER_FLAG_STRIP_LOW
+        ));
+
+        $repository = new ServiceOrderRepository();
+
+        $resultado = $repository->buscarPorId((int)$q);
+
+    print_r($resultado); // Debug: Exibe o resultado no console do navegador
+
+        $data = [
+            'service_order' => [
+                'id' => $resultado['id'],
+                'number' => $resultado['number'],
+                'status' => $resultado['status'],
+                'service_category' => $resultado['service_category'],
+                'priority' => $resultado['priority'],
+
+                'mileage' => $resultado['mileage'],
+
+                'complaint' => $resultado['complaint'],
+                'diagnosis' => $resultado['diagnosis'],
+                'observations' => $resultado['observations'],
+
+                'estimated_value' => $resultado['estimated_value'],
+                'total_value' => $resultado['total_value'],
+
+                'entry_date' => $resultado['entry_date'],
+                'expected_date' => $resultado['estimated_delivery'],
+                'completion_date' => $resultado['completion_date'],
+
+                'created_at' => $resultado['created_at'],
+                'updated_at' => $resultado['updated_at'],
+
+                'customer' => [
+                    'id' => $resultado['customer_id'],
+                    'name' => $resultado['customer_name'],
+                    'phone' => $resultado['customer_phone'],
+                    'email' => $resultado['customer_email'],
+                ],
+
+                'vehicle' => [
+                    'id' => $resultado['vehicle_id'],
+                    'brand' => $resultado['brand'],
+                    'model' => $resultado['model'],
+                    'model_year' => $resultado['model_year'],
+                    'color' => $resultado['color'],
+                    'plate' => $resultado['plate'],
+                ],
+
+                'created_by' => [
+                    'id' => $resultado['user_id'],
+                    'username' => $resultado['created_by_name'],
+                ]
+            ]
+        ];
+
+        $styles = ['/assets/css/dashboard.css'];
+
+        return new View(view: 'admin/detalhes-os', vars: $data, styles: $styles);
     }
 }

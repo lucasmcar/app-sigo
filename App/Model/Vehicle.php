@@ -48,7 +48,8 @@ class Vehicle extends ModelBase
                 'v.color',
                 'v.plate',
                 'v.mileage',
-                'c.name AS customer_name'
+                'c.name AS customer_name',
+                'v.customer_id',
             ])[0] ?? null;
     }
 }

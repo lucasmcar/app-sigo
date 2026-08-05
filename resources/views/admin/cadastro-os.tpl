@@ -76,7 +76,7 @@
                 </div>
 
                 <!-- CARD VEÍCULO -->
-
+                <input type="hidden" id="customer_id" name="customer_id" value="{{ $customer_id }}">
                 <div
                     class="card border-primary mb-4 d-none"
                     id="vehicleCard">

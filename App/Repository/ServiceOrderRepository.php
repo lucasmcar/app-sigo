@@ -15,6 +15,10 @@ class ServiceOrderRepository
 
     public function create(array $data) : int
     {
+        if (empty($data['number'])) {
+            $data['number'] = $this->model->nextNumber();
+        }
+
         return $this->model->create($data);
     }
 
@@ -41,5 +45,10 @@ class ServiceOrderRepository
     public function all()
     {
         return $this->model->all();
+    }
+
+    public function buscarPorId(int $id)
+    {
+        return $this->model->buscarPorId($id);
     }
 }

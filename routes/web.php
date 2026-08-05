@@ -34,6 +34,7 @@ $router->group('/sigo', function($router) {
     //Ordem de serviço
     $router->get('/os/cadastro', 'ServiceOrderController', 'cadastroServiceOrder');
     $router->post('/os/cadastrar', 'ServiceOrderController', 'cadastrar');
+    $router->get('/os/{id}', 'ServiceOrderController', 'buscaOS');
     
 },[AuthMiddleware::class]);
 
