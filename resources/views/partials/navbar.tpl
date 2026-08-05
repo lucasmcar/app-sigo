@@ -34,7 +34,7 @@
             <li><a class="dropdown-item" href="/sigo/cadastro/atualizar">Editar cadastro</a></li>
             <li><a class="dropdown-item" href="/sigo/cliente/cadastro">Clientes</a></li>
             <li><a class="dropdown-item" href="/sigo/veiculo/cadastro">Veículos</a></li>
-            <li><a class="dropdown-item" href="/sigo/os/cadastro'">Serviços</a></li>
+            <li><a class="dropdown-item" href="/sigo/os/cadastro">Serviços</a></li>
             <li><a class="dropdown-item" href="#">Funcionários</a></li>
           </ul>
         </li>
